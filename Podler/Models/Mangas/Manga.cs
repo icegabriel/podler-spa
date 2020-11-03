@@ -36,5 +36,17 @@ namespace Podler.Models.Mangas
         {
             Staffs.Add(new MangaStaff() { Staff = staff });
         }
+
+        internal void Update(Manga manga)
+        {
+            Title = manga.Title;
+            Summary = manga.Summary;
+            ReleaseDate = manga.ReleaseDate;
+            Status = manga.Status;
+            CoverPath = manga.CoverPath;
+            Genres = manga.Genres;
+            Themes = manga.Themes;
+            Staffs = manga.Staffs;
+        }
     }
 }

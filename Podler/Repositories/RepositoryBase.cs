@@ -52,10 +52,8 @@ namespace Podler.Repositories
             await Context.SaveChangesAsync();
         }
 
-        public virtual async Task RemoveAsync(int id)
+        public virtual async Task RemoveAsync(T obj)
         {
-            var obj = await GetAsync(id);
-
             DbSet.Remove(obj);
             await Context.SaveChangesAsync();
         }
@@ -68,6 +66,6 @@ namespace Podler.Repositories
         Task<List<T>> FindAsync(params int[] ps);
         Task IncludeAsync(T obj);
         Task UpdateAsync(T obj);
-        Task RemoveAsync(int id);
+        Task RemoveAsync(T obj);
     }
 }

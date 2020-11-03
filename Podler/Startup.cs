@@ -42,7 +42,7 @@ namespace Podler
             services.AddTransient<IThemesRepository, ThemesRepository>();
             services.AddTransient<IStaffsRepository, StaffsRepository>();
 
-            services.AddTransient<IFileService, FileService>();
+            services.AddSingleton<IFileService, FileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

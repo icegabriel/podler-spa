@@ -6,9 +6,7 @@ namespace Podler.Models.Mangas
 {
     public class MangaUpload : BaseManga
     {
-        [Required(ErrorMessage = "A imagem de capa é obrigatório")]
         public IFormFile Cover { get; set; }
-
         public List<int> Genres { get; set; }
         public List<int> Themes { get; set; }
         public List<int> Staffs { get; set; }
