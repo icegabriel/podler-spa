@@ -9,9 +9,14 @@ namespace Podler.Data
     public class ApplicationIdentityContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         public ApplicationIdentityContext(
-            DbContextOptions options,
+            DbContextOptions<ApplicationIdentityContext> options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
     }
 }

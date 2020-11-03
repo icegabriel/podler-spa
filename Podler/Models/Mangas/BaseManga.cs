@@ -20,15 +20,9 @@ namespace Podler.Models.Mangas
         [Required(ErrorMessage = "O status é obrigatório")]
         public Status Status { get; set; }
 
-        public List<Genre> Genres { get; set; }
-        public List<Theme> Themes { get; set; }
-        public List<Staff> Staffs { get; set; }
-
         public BaseManga()
         {
-            Genres = new List<Genre>();
-            Themes = new List<Theme>();
-            Staffs = new List<Staff>();
+
         }
     }
 

@@ -17,13 +17,13 @@ namespace Podler.Models
         [Required(ErrorMessage = "A data de lançamento é obrigatória")]
         public DateTime ReleaseDate { get; set; }
 
-        public List<string> PagesPath { get; set; }
-        public List<Manga> Mangas { get; set; }
+        public List<ImagePage> Pages { get; set; }
+        
+        public Manga Manga { get; set; }
 
         public Chapter()
         {
-            Mangas = new List<Manga>();
-            PagesPath = new List<string>();
+            Pages = new List<ImagePage>();
         }
     }
 }

@@ -1,9 +1,14 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Podler.Data;
+using Podler.Repositories;
+using Podler.Services;
 
 namespace Podler
 {
@@ -19,6 +24,11 @@ namespace Podler
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("ApplicationConnection");
+            
+            services.AddDbContext<ApplicationContext>(options => 
+                options.UseSqlite(connectionString));
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory
@@ -26,10 +36,17 @@ namespace Podler
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddTransient<IMangasRepository, MangasRepository>();
+            services.AddTransient<IGenresRepository, GenresRepository>();
+            services.AddTransient<IThemesRepository, ThemesRepository>();
+            services.AddTransient<IStaffsRepository, StaffsRepository>();
+
+            services.AddTransient<IFileService, FileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -75,6 +92,9 @@ namespace Podler
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            serviceProvider.GetService<ApplicationContext>().Database.MigrateAsync().Wait();
+            serviceProvider.GetService<ApplicationIdentityContext>().Database.MigrateAsync().Wait();
         }
     }
 }
