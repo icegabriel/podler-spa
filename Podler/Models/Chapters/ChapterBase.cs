@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Podler.Models.Mangas;
 
-namespace Podler.Models
+namespace Podler.Models.Chapters
 {
-    public class Chapter : ModelBase
+    public class ChapterBase : ModelBase
     {
         [Required(ErrorMessage = "O título é obrigatório")]
         [StringLength(40, ErrorMessage = "O campo {0} precisa ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 1)]
@@ -17,14 +16,6 @@ namespace Podler.Models
         [Required(ErrorMessage = "A data de lançamento é obrigatória")]
         public DateTime ReleaseDate { get; set; }
 
-        public List<ImagePage> Pages { get; set; }
-        
         public int MangaId { get; set; }
-        public Manga Manga { get; set; }
-
-        public Chapter()
-        {
-            Pages = new List<ImagePage>();
-        }
     }
 }

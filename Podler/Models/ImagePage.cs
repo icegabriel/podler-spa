@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Podler.Models.Mangas;
+using Podler.Models.Chapters;
 
 namespace Podler.Models
 {

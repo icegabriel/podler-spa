@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Podler.Models;
+using Podler.Models.Chapters;
 using Podler.Models.Mangas;
 
 namespace Podler.Data

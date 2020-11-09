@@ -20,7 +20,7 @@ namespace Podler.Repositories
 
         public virtual async Task<T> GetAsync(int id)
         {
-            return await DbSet.Where(obj => obj.Id == id).FirstOrDefaultAsync();
+            return await DbSet.Where(obj => obj.Id == id).SingleOrDefaultAsync();
         }
 
         public virtual async Task<List<T>> GetAllAsync()

@@ -36,7 +36,7 @@ namespace Podler.Repositories
 
         public async Task<Manga> GetByTitleAsync(string title)
         {
-            return await DbSet.Where(m => m.Title.ToUpper() == title.ToUpper()).FirstOrDefaultAsync();
+            return await DbSet.Where(m => m.Title.ToUpper() == title.ToUpper()).SingleOrDefaultAsync();
         }
 
         public async Task<Manga> IncludeMangaAsync(MangaUpload mangaUpload)

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Podler.Models.Chapters;
 
 namespace Podler.Models.Mangas
 {

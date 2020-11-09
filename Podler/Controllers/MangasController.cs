@@ -68,7 +68,7 @@ namespace Podler.Controllers
 
                 mangaDb = await _mangaRepository.IncludeMangaAsync(manga);
 
-                var url = Url.Action("GetById", new { id = mangaDb.Id });
+                var url = Url.Action("GetByIdAsync", new { id = mangaDb.Id });
 
                 return Created(url, mangaDb);
             }
@@ -89,7 +89,7 @@ namespace Podler.Controllers
                 var mangaDb = await _mangaRepository.GetAsync(manga.Id);
 
                 if (mangaDb == null)
-                    return BadRequest("Manga nao encontrado.");
+                    return NotFound("Manga nao encontrado.");
 
                 if (manga.Cover != null && manga.Cover.Length > MaxImageLength)
                     return BadRequest($"A imagem deve ser menor que 5MB.");
@@ -116,7 +116,7 @@ namespace Podler.Controllers
                 return NoContent();
             }
 
-            return BadRequest("Manga não encontrado.");
+            return NotFound("Manga não encontrado.");
         }
     }
 }

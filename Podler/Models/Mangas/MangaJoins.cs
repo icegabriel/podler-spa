@@ -1,4 +1,5 @@
 using System.Runtime.Serialization;
+using Podler.Models.Chapters;
 
 namespace Podler.Models.Mangas
 {

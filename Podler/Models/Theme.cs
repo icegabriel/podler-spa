@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Podler.Models.Mangas;
@@ -15,6 +16,11 @@ namespace Podler.Models
         public Theme()
         {
             Mangas = new List<Manga>();
+        }
+
+        internal void Update(Theme theme)
+        {
+            Title = theme.Title;
         }
     }
 }
