@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Podler.Models.Mangas;
 
 namespace Podler.Models.Chapters
 {
@@ -11,11 +10,9 @@ namespace Podler.Models.Chapters
         public string Title { get; set; }
 
         [Required(ErrorMessage = "O numero do captulo é obrigatório")]
-        public decimal Number { get; set; }
+        public decimal? Number { get; set; }
         
         [Required(ErrorMessage = "A data de lançamento é obrigatória")]
         public DateTime ReleaseDate { get; set; }
-
-        public int MangaId { get; set; }
     }
 }

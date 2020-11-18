@@ -1,16 +1,18 @@
-using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+using Podler.Models.ImagePages;
 
 namespace Podler.Models.Chapters
 {
     public class ChapterUpload : ChapterBase
     {
-        public List<IFormFile> Pages { get; set; }
+        public List<ImagePageUpload> Pages { get; set; }
+        
+        public int? MangaId { get; set; }
 
         public ChapterUpload()
         {
-            Pages = new List<IFormFile>();
+            Pages = new List<ImagePageUpload>();
         }
     }
 }

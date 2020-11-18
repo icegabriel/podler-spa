@@ -51,18 +51,18 @@ namespace Podler.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (!ModelState.IsValid || chapterUpload.MangaId == null)
                     return BadRequest("Error Verifique os campos e tente novamente.");
 
                 if (chapterUpload.Pages.Count < 1)
                     return BadRequest("O capitulo deve ter pelo menos uma imagem.");
 
-                var imagesIsValid = chapterUpload.Pages.All(p => p.Length < MaxImageLength);
+                var imagesIsValid = chapterUpload.Pages.All(p => p.Image.Length < MaxImageLength);
 
                 if(!imagesIsValid)
                     return BadRequest("As imagens devem ser menores que 5MB");
                 
-                var mangaDb = await _mangasRepository.GetAsync(chapterUpload.MangaId);
+                var mangaDb = await _mangasRepository.GetAsync((int)chapterUpload.MangaId);
 
                 if (mangaDb == null)
                     return NotFound("Manga nao foi encontrado para adicionar o capitulo.");
@@ -72,6 +72,37 @@ namespace Podler.Controllers
                 var url = Url.Action("GetByIdAsync", new { id = chapterDb.Id });
 
                 return Created(url, chapterDb);
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, $"Internal Server Error: {e}");
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> PutAsync([FromForm] ChapterUpload chapterUpload)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest("Error Verifique os campos e tente novamente.");
+
+                if (chapterUpload.Pages.Count > 0)
+                {
+                    var imagesIsValid = chapterUpload.Pages.All(p => p.Image.Length < MaxImageLength);
+
+                    if(!imagesIsValid)
+                        return BadRequest("As imagens devem ser menores que 5MB");
+                }
+                
+                var chapterDb = await _chaptersRepository.GetAsync(chapterUpload.Id);
+
+                if(chapterDb == null)
+                    return NotFound("Capitulo nao encotrado para alterar");
+
+                await _chaptersRepository.UpdateChapterAsync(chapterUpload, chapterDb);
+
+                return Ok("Capitulo alterado com sucesso");
             }
             catch(Exception e)
             {

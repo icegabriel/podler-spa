@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Podler.Models;
+using Podler.Models.ImagePages;
 
 namespace Podler.Services
 {
@@ -36,9 +37,12 @@ namespace Podler.Services
         {
             var fileExtension = Path.GetExtension(cover.FileName);
             var fileName = $@"{Guid.NewGuid()}{fileExtension}";
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), CoversPath, fileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), CoversPath);
 
-            using (var stream = File.Create(filePath))
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            using (var stream = File.Create(Path.Combine(path, fileName)))
                 await cover.CopyToAsync(stream);
         
             return $"/images/covers/{fileName}";
@@ -61,20 +65,15 @@ namespace Podler.Services
             return $"/images/chapters/{chapterId}/{fileName}";
         }
 
-        public async Task<List<ImagePage>> SaveChapterPageListAsync(List<IFormFile> imagePagesUpload, int chapterId)
+        public Task RemoveChapterPageAsync(string pagePath)
         {
-            var imagePages = new List<ImagePage>();
+            return Task.Factory.StartNew(() => {
 
-            for (int i = 0; i < imagePagesUpload.Count; i++)
-            {
-                var imagePage = new ImagePage();
-                imagePage.Number = i;
-                imagePage.Path = await SaveChapterPageAsync(imagePagesUpload[i], chapterId);
+                var fileName = Path.GetFileName(pagePath);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), ChaptersPath, fileName);
 
-                imagePages.Add(imagePage);
-            }
-
-            return imagePages;
+                File.Delete(filePath);
+            });
         }
     }
 
@@ -82,7 +81,8 @@ namespace Podler.Services
     {
         Task<string> SaveCoverAsync(IFormFile cover);
         Task RemoveCoverAsync(string coverPath);
+
         Task<string> SaveChapterPageAsync(IFormFile imagePage, int chapterId);
-        Task<List<ImagePage>> SaveChapterPageListAsync(List<IFormFile> imagePages, int chapterId);
+        Task RemoveChapterPageAsync(string pagePath);
     }
 }

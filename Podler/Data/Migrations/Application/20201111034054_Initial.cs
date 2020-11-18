@@ -106,7 +106,7 @@ namespace Podler.Data.Migrations.Application
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chapers",
+                name: "Chapters",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -114,17 +114,17 @@ namespace Podler.Data.Migrations.Application
                     Title = table.Column<string>(maxLength: 40, nullable: false),
                     Number = table.Column<decimal>(nullable: false),
                     ReleaseDate = table.Column<DateTime>(nullable: false),
-                    MangaId = table.Column<int>(nullable: true)
+                    MangaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Chapers", x => x.Id);
+                    table.PrimaryKey("PK_Chapters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Chapers_Mangas_MangaId",
+                        name: "FK_Chapters_Mangas_MangaId",
                         column: x => x.MangaId,
                         principalTable: "Mangas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,22 +210,22 @@ namespace Podler.Data.Migrations.Application
                         .Annotation("Sqlite:Autoincrement", true),
                     Path = table.Column<string>(nullable: false),
                     Number = table.Column<int>(nullable: false),
-                    ChapterId = table.Column<int>(nullable: true)
+                    ChapterId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ImagePages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ImagePages_Chapers_ChapterId",
+                        name: "FK_ImagePages_Chapters_ChapterId",
                         column: x => x.ChapterId,
-                        principalTable: "Chapers",
+                        principalTable: "Chapters",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chapers_MangaId",
-                table: "Chapers",
+                name: "IX_Chapters_MangaId",
+                table: "Chapters",
                 column: "MangaId");
 
             migrationBuilder.CreateIndex(
@@ -284,7 +284,7 @@ namespace Podler.Data.Migrations.Application
                 name: "MangaTheme");
 
             migrationBuilder.DropTable(
-                name: "Chapers");
+                name: "Chapters");
 
             migrationBuilder.DropTable(
                 name: "Mangas");

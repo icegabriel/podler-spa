@@ -42,6 +42,7 @@ namespace Podler
             services.AddTransient<IThemesRepository, ThemesRepository>();
             services.AddTransient<IStaffsRepository, StaffsRepository>();
             services.AddTransient<IChaptersRepository, ChaptersRepository>();
+            services.AddTransient<IImagePagesRepository, ImagePagesRepository>();
 
             services.AddSingleton<IFileService, FileService>();
         }

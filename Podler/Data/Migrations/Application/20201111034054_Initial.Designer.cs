@@ -9,7 +9,7 @@ using Podler.Data;
 namespace Podler.Data.Migrations.Application
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20201103023306_Initial")]
+    [Migration("20201111034054_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,16 +18,17 @@ namespace Podler.Data.Migrations.Application
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9");
 
-            modelBuilder.Entity("Podler.Models.Chapter", b =>
+            modelBuilder.Entity("Podler.Models.Chapters.Chapter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("MangaId")
+                    b.Property<int>("MangaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Number")
+                    b.Property<decimal?>("Number")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("ReleaseDate")
@@ -42,7 +43,7 @@ namespace Podler.Data.Migrations.Application
 
                     b.HasIndex("MangaId");
 
-                    b.ToTable("Chapers");
+                    b.ToTable("Chapters");
                 });
 
             modelBuilder.Entity("Podler.Models.Genre", b =>
@@ -61,16 +62,17 @@ namespace Podler.Data.Migrations.Application
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("Podler.Models.ImagePage", b =>
+            modelBuilder.Entity("Podler.Models.ImagePages.ImagePage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ChapterId")
+                    b.Property<int>("ChapterId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Number")
+                    b.Property<int?>("Number")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Path")
@@ -239,18 +241,22 @@ namespace Podler.Data.Migrations.Application
                     b.ToTable("Themes");
                 });
 
-            modelBuilder.Entity("Podler.Models.Chapter", b =>
+            modelBuilder.Entity("Podler.Models.Chapters.Chapter", b =>
                 {
                     b.HasOne("Podler.Models.Mangas.Manga", "Manga")
                         .WithMany("Chapters")
-                        .HasForeignKey("MangaId");
+                        .HasForeignKey("MangaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Podler.Models.ImagePage", b =>
+            modelBuilder.Entity("Podler.Models.ImagePages.ImagePage", b =>
                 {
-                    b.HasOne("Podler.Models.Chapter", "Chapter")
+                    b.HasOne("Podler.Models.Chapters.Chapter", "Chapter")
                         .WithMany("Pages")
-                        .HasForeignKey("ChapterId");
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Podler.Models.Mangas.Manga", b =>

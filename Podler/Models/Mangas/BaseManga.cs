@@ -17,7 +17,7 @@ namespace Podler.Models.Mangas
         public DateTime ReleaseDate { get; set; }
 
         [Required(ErrorMessage = "O status é obrigatório")]
-        public Status Status { get; set; }
+        public Status? Status { get; set; }
 
         public BaseManga()
         {

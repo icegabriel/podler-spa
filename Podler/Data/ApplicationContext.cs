@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Podler.Models;
 using Podler.Models.Chapters;
+using Podler.Models.ImagePages;
 using Podler.Models.Mangas;
 
 namespace Podler.Data
@@ -8,7 +9,7 @@ namespace Podler.Data
     public class ApplicationContext : DbContext
     {
         public DbSet<Manga> Mangas { get; set; }
-        public DbSet<Chapter> Chapers { get; set; }
+        public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Staff> Staffs { get; set; }

@@ -12,7 +12,7 @@ namespace Podler.Models
         public string Title { get; set; }
 
         [Required(ErrorMessage = "O campo role e obriatorio.")]
-        public Role Role { get; set; }
+        public Role? Role { get; set; }
 
         public List<Manga> Mangas { get; set; }
 
